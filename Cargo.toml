@@ -1,0 +1,7 @@
+[package]
+name = "nxconf"
+version = "0.0.1"
+authors = ["David R. Myers II <davidrmyersii@gmail.com>"]
+
+[dependencies]
+clap = "2.12.*"
