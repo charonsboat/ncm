@@ -1,0 +1,65 @@
+name: nxconf
+version: 0.0.1
+author: David R. Myers II <davidrmyersii@gmail.com>
+about: A full-featured Nginx configuration management tool (built in Rust).
+args:
+subcommands:
+    - create:
+        version: "0.0.1"
+        about: Creates a new server block configuration file.
+        args:
+            - FILE:
+                help: Name of Nginx conf file to create (e.g. website.conf)
+                required: true
+                index: 1
+            - document_root:
+                long: root
+                help: Sets the DocumentRoot for the Server block
+                value_name: ROOT
+                takes_value: true
+                required: true
+            - hostname:
+                long: hostname
+                help: Sets the ServerName (hostname) for the Server block
+                value_name: HOST
+                default_value: _
+                takes_value: true
+            - ip_address:
+                long: ip
+                help: Sets the IP Address for the Server block
+                value_name: IP
+                takes_value: true
+            - conf_dir:
+                long: conf-dir
+                help: Sets the directory to store the new .conf file
+                value_name: PATH
+                default_value: /etc/nginx/sites-available
+                takes_value: true
+    - enable:
+        version: "0.0.1"
+        about: Enables an existing configuration file
+        args:
+            - FILE:
+                help: Name of the Nginx conf file to enable (e.g. website.conf)
+                required: true
+                index: 1
+            - available_dir:
+                long: available-dir
+                help: Path to where the specified conf file is stored
+                value_name: PATH
+                default_value: /etc/nginx/sites-available
+                takes_value: true
+            - enabled_dir:
+                long: enabled-dir
+                help: Path to where nxconf should store the link to the specified file
+                value_name: PATH
+                default_value: /etc/nginx/sites-enabled
+                takes_value: true
+    - test:
+        version: "0.0.1"
+        about: Controls testing features
+        args:
+            - debug:
+                short: d
+                long: debug
+                help: Print debug information
