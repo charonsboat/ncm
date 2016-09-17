@@ -185,7 +185,7 @@ Vagrant.configure(2) do |config|
         args_nginx_group = "vagrant"
 
         # call nginx provisioner
-        # config.vm.provision :shell, privileged: false, path: "#{scripts_url}/nginx", args: [ args_nginx_document_root, args_nginx_hostname, args_nginx_ip_address, args_nginx_user, args_nginx_group ]
+        config.vm.provision :shell, privileged: false, path: "#{scripts_url}/nginx", args: [ args_nginx_document_root, args_nginx_hostname, args_nginx_ip_address, args_nginx_user, args_nginx_group ]
 
         ####
         ## node
