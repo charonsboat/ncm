@@ -5,6 +5,7 @@ use clap::App;
 use std::io::prelude::*;
 use std::fs::File;
 use std::path::{Path, PathBuf};
+use std::os::unix::fs;
 
 fn main() {
     let config  = load_yaml!("nxconf.yml");
@@ -22,6 +23,17 @@ fn main() {
             let file_contents = generate_conf(document_root, hostname);
 
             generate_file(&file_path, &file_contents);
+        },
+        ("enable", Some(subc)) => {
+            // the 'enable' subcommand was used
+            let filename = subc.value_of("FILE").unwrap();
+            let source_dir = subc.value_of("available_dir").unwrap();
+            let dest_dir = subc.value_of("enabled_dir").unwrap();
+
+            let source_path = Path::new(source_dir).join(filename);
+            let dest_path = Path::new(dest_dir).join(filename);
+
+            generate_link(&source_path, &dest_path);
         },
         _ => {
             // no command was passed (or an unrecognized command)
@@ -44,6 +56,18 @@ fn generate_file(file_path: &PathBuf, file_contents: &str) {
         },
         Err(error) => {
             println!("Error (create): {}", error);
+        }
+    }
+}
+
+fn generate_link(source_path: &PathBuf, dest_path: &PathBuf) {
+    match fs::symlink(source_path, dest_path) {
+        Ok(_) => {
+            // link created successfully
+            println!("Successfully enabled conf file.");
+        },
+        Err(error) => {
+            println!("Error (enable): {}", error);
         }
     }
 }
