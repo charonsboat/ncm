@@ -6,6 +6,7 @@ args:
 subcommands:
     - create:
         version: "0.0.1"
+        author: David R. Myers II <davidrmyersii@gmail.com>
         about: Creates a new server block configuration file.
         args:
             - FILE:
@@ -14,7 +15,7 @@ subcommands:
                 index: 1
             - document_root:
                 long: root
-                help: Sets the DocumentRoot for the Server block
+                help: Sets the DocumentRoot for the Server block (e.g. /var/www/website/public)
                 value_name: ROOT
                 takes_value: true
                 required: true
@@ -24,19 +25,20 @@ subcommands:
                 value_name: HOST
                 default_value: _
                 takes_value: true
-            - ip_address:
-                long: ip
-                help: Sets the IP Address for the Server block
-                value_name: IP
-                takes_value: true
             - conf_dir:
                 long: conf-dir
                 help: Sets the directory to store the new .conf file
                 value_name: PATH
                 default_value: /etc/nginx/sites-available
                 takes_value: true
+            # - ip_address:
+            #     long: ip
+            #     help: Sets the IP Address for the Server block
+            #     value_name: IP
+            #     takes_value: true
     - enable:
         version: "0.0.1"
+        author: David R. Myers II <davidrmyersii@gmail.com>
         about: Enables an existing configuration file
         args:
             - FILE:
@@ -57,9 +59,12 @@ subcommands:
                 takes_value: true
     - test:
         version: "0.0.1"
+        author: David R. Myers II <davidrmyersii@gmail.com>
         about: Controls testing features
         args:
             - debug:
                 short: d
                 long: debug
                 help: Print debug information
+global_settings:
+    - ColoredHelp
