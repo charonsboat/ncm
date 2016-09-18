@@ -5,12 +5,24 @@ use clap::App;
 use std::io::prelude::*;
 use std::fs::{File};
 use std::path::{Path, PathBuf};
-use std::io;
 
 fn generate_file(file_path: &PathBuf, file_contents: &str) {
-    let mut file = File::create(file_path).unwrap();
 
-    file.write_all(file_contents.as_bytes());
+    match File::create(file_path) {
+        Ok(mut result) => {
+            match result.write_all(file_contents.as_bytes()) {
+                Ok(_) => {
+                    println!("Success!");
+                },
+                Err(error) => {
+                    println!("Error (write_all): {}", error);
+                }
+            }
+        },
+        Err(error) => {
+            println!("Error (create): {}", error);
+        }
+    }
 }
 
 fn main() {
@@ -25,29 +37,58 @@ fn main() {
             let hostname = subc.value_of("hostname").unwrap();
             let conf_dir = subc.value_of("conf_dir").unwrap();
 
-            println!("Filename: {}, Document Root: {}, Hostname: {}, Conf Dir: {}", filename, document_root, hostname, conf_dir);
+            // println!("Filename: {}, Document Root: {}, Hostname: {}, Conf Dir: {}", filename, document_root, hostname, conf_dir);
 
-            let conf_path = Path::new(conf_dir);
-            let file_path = conf_path.join(filename);
+            let file_path = Path::new(conf_dir).join(filename);
+            let file_contents = format!("\
+server {{
+        listen 80;
+        listen [::]:80;
 
-            if conf_path.exists() {
-                // conf dir is a directory
-                if file_path.exists() {
-                    // file exists already
-                    // should we overwrite it?
-                } else {
-                    // no file yet
-                    // we're good to go
+        root {document_root};
+        index index.html index.htm index.php;
 
-                    let file_contents = "This is some text";
+        server_name {hostname};
 
-                    generate_file(&file_path, &file_contents);
-                }
-            } else {
-                // directory doesn't exist
-                // should we create it or should there be a 'force create' flag?
-                // maybe prompt the user to create it?
-            }
+        location / {{
+                try_files $uri $uri/ /index.php?$query_string;
+        }}
+
+        # load the index page on 404
+        error_page 404 /index.php;
+
+        # don't log requests to favicon.ico
+        location = /favicon.ico {{
+            log_not_found off;
+            access_log    off;
+        }}
+
+        # don't log requests to robots.txt
+        location = /robots.txt {{
+            log_not_found off;
+            access_log    off;
+        }}
+
+        # pass the PHP scripts to FastCGI server listening on the php-fpm socket
+        location ~ .php$ {{
+                try_files $uri =404;
+                fastcgi_pass unix:/run/php/php-fpm.sock;
+                fastcgi_index index.php;
+                include fastcgi_params;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                fastcgi_param HTTPS off;
+        }}
+
+        # disable access to .htaccess files
+        location ~ /.ht {{
+            deny all;
+        }}
+
+        sendfile off;
+}}
+", hostname = hostname, document_root = document_root);
+
+            generate_file(&file_path, &file_contents);
         },
         _ => {
             // no command was passed (or an unrecognized command)
