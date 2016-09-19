@@ -57,6 +57,21 @@ subcommands:
                 value_name: PATH
                 default_value: /etc/nginx/sites-enabled
                 takes_value: true
+    - disable:
+        version: "0.0.1"
+        author: David R. Myers II <davidrmyersii@gmail.com>
+        about: Disables an existing configuration file
+        args:
+            - FILE:
+                help: Name of the Nginx conf file to disable (e.g. website.conf)
+                required: true
+                index: 1
+            - enabled_dir:
+                long: enabled-dir
+                help: Directory path to the specified file (if non-standard)
+                value_name: PATH
+                default_value: /etc/nginx/sites-enabled
+                takes_value: true
     - test:
         version: "0.0.1"
         author: David R. Myers II <davidrmyersii@gmail.com>
