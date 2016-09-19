@@ -3,7 +3,7 @@ extern crate clap;
 
 use clap::App;
 use std::io::prelude::*;
-use std::fs::File;
+use std::fs::{File, remove_file};
 use std::path::{Path, PathBuf};
 use std::os::unix::fs;
 
@@ -34,6 +34,15 @@ fn main() {
             let dest_path = Path::new(dest_dir).join(filename);
 
             generate_link(&source_path, &dest_path);
+        },
+        ("disable", Some(subc)) => {
+            // the 'disable' subcommand was used
+            let filename = subc.value_of("FILE").unwrap();
+            let file_dir = subc.value_of("enabled_dir").unwrap();
+
+            let file_path = Path::new(file_dir).join(filename);
+
+            remove_link(&file_path);
         },
         _ => {
             // no command was passed (or an unrecognized command)
@@ -68,6 +77,18 @@ fn generate_link(source_path: &PathBuf, dest_path: &PathBuf) {
         },
         Err(error) => {
             println!("Error (enable): {}", error);
+        }
+    }
+}
+
+fn remove_link(file_path: &PathBuf) {
+    match remove_file(file_path) {
+        Ok(_) => {
+            // successfully removed link
+            println!("Link removed successfully.");
+        },
+        Err(error) => {
+            println!("Error (disable): {}", error);
         }
     }
 }
