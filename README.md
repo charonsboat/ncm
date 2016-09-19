@@ -25,6 +25,11 @@ cp target/release/nxconf ~/bin/nxconf
 Note: There is a Vagrant environment available with all of the necessary build tools (just run `vagrant up`).
 
 
+## Usage
+
+For usage instructions, just call `nxconf --help` once you have the binary in your PATH. It will present you with a list of options and subcommands available.
+
+
 ## Meta
 
 - Home: <https://github.com/drm2/nxconf>
