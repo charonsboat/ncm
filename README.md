@@ -17,6 +17,9 @@ To install `ncm` from source, just run the following commands:
 # download the project
 git clone https://github.com/github/hub.git && cd hub
 
+# if you want to build a specific version, checkout that tag
+git checkout tags/<version> # e.g. tags/v0.0.1
+
 # assuming `~/bin` is in your PATH:
 cargo build --release
 cp target/release/ncm ~/bin/ncm
