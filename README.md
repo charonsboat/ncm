@@ -36,4 +36,4 @@ For usage instructions, just call `nxconf --help` once you have the binary in yo
 - Bugs: <https://github.com/drm2/nxconf/issues>
 - Authors: <https://github.com/drm2/nxconf/graphs/contributors>
 
-When filing a new bug, please make sure one doesn't already exist for your problem by [searching the issues](https://github.com/drm2/nxconf/issues). Make sure you include any useful details such as error messages, OS details, binary version, Nginx version, etc.
+When filing a new bug, please make sure one doesn't already exist for your problem by [searching the issues](https://github.com/drm2/nxconf/issues). Make sure you include any useful details such as error messages, OS details, nxconf version, Nginx version, etc.
