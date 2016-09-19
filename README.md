@@ -11,7 +11,16 @@ Dependencies:
 
 - **Rust 1.11.0**
 
-To install `ncm` from source, just run the following commands:
+There are 2 ways to install `ncm` from source.
+
+**Simple** (just the binary):
+
+```bash
+# assuming `~/.cargo/bin` is in your PATH
+cargo install --git https://github.com/drm2/ncm
+```
+
+**Alternative** (with the source):
 
 ```bash
 # download the project
@@ -20,12 +29,11 @@ git clone https://github.com/drm2/ncm.git && cd ncm
 # if you want to build a specific version, checkout that tag
 git checkout tags/<version> # e.g. tags/v0.0.1
 
-# assuming `~/bin` is in your PATH:
-cargo build --release
-cp target/release/ncm ~/bin/ncm
+# assuming `~/.cargo/bin` is in your PATH
+cargo install
 ```
 
-Note: There is a Vagrant environment available with all of the necessary build tools (just run `vagrant up`). The Vagrant environment also comes packaged with an Nginx installation for you to start testing `ncm` without affecting your local environment!
+Note: There is a Vagrant environment available with all of the necessary build tools if you choose to clone the repo. The Vagrant environment also comes packaged with an Nginx installation for you to start testing `ncm` without affecting your local environment!
 
 
 ## Usage
