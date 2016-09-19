@@ -1,13 +1,13 @@
 name: ncm
 version: 0.0.1
 author: David R. Myers II <davidrmyersii@gmail.com>
-about: A full-featured Nginx configuration management tool (built in Rust).
+about: ncm is a command line tool for nginx configuration management (built in Rust)
 args:
 subcommands:
     - create:
         version: "0.0.1"
         author: David R. Myers II <davidrmyersii@gmail.com>
-        about: Creates a new server block configuration file.
+        about: Creates a new server block configuration file
         args:
             - FILE:
                 help: Name of Nginx conf file to create (e.g. website.conf)
