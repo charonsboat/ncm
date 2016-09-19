@@ -22,7 +22,7 @@ cargo build --release
 cp target/release/ncm ~/bin/ncm
 ```
 
-Note: There is a Vagrant environment available with all of the necessary build tools (just run `vagrant up`).
+Note: There is a Vagrant environment available with all of the necessary build tools (just run `vagrant up`). The Vagrant environment also comes packaged with an Nginx installation for you to start testing `ncm` without affecting your local environment!
 
 
 ## Usage
