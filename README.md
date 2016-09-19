@@ -1,6 +1,6 @@
-# ncm
+# nginx configuration manager
 
-A full-featured Nginx configuration management tool (built in Rust).
+ncm is a command line tool for nginx configuration management (built in Rust).
 
 
 ## Installation
