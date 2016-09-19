@@ -29,6 +29,49 @@ Note: There is a Vagrant environment available with all of the necessary build t
 
 For usage instructions, just call `ncm --help` once you have the binary in your PATH. It will present you with a list of options and subcommands available.
 
+```
+ncm 0.0.1
+ncm is a command line tool for nginx configuration management (built in Rust)
+David R. Myers II <davidrmyersii@gmail.com>
+
+USAGE:
+    ncm [SUBCOMMAND]
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+SUBCOMMANDS:
+    create     Creates a new server block configuration file
+    disable    Disables an existing configuration file
+    enable     Enables an existing configuration file
+    help       Prints this message or the help of the given subcommand(s)
+    test       Controls testing features
+```
+
+You will probably want to call `--help` on each subcommand to see usage options for them as well. Here is an example of the output for `ncm create --help`:
+
+```
+ncm-create 0.0.1
+Creates a new server block configuration file
+David R. Myers II <davidrmyersii@gmail.com>
+
+USAGE:
+    ncm create [OPTIONS] <FILE> --root <ROOT>
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+OPTIONS:
+        --conf-dir <PATH>    Sets the directory to store the new .conf file [default: /etc/nginx/sites-available]
+        --root <ROOT>        Sets the DocumentRoot for the Server block (e.g. /var/www/website/public)
+        --hostname <HOST>    Sets the ServerName (hostname) for the Server block [default: _]
+
+ARGS:
+    <FILE>    Name of Nginx conf file to create (e.g. website.conf)
+```
+
 
 ## Meta
 
