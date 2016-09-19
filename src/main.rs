@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 use std::os::unix::fs;
 
 fn main() {
-    let config  = load_yaml!("nxconf.yml");
+    let config  = load_yaml!("ncm.yml");
     let matches = App::from_yaml(config).get_matches();
 
     match matches.subcommand() {

@@ -1,5 +1,5 @@
 [package]
-name = "nxconf"
+name = "ncm"
 version = "0.0.1"
 authors = ["David R. Myers II <davidrmyersii@gmail.com>"]
 

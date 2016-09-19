@@ -34,7 +34,7 @@ max_memory = 1536
 
 Vagrant.configure(2) do |config|
 
-    config.vm.define "nxconf" do |vebs|
+    config.vm.define "ncm" do |vebs|
 
         # set the base box
         vebs.vm.box = "ubuntu/trusty64"

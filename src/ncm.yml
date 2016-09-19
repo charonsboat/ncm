@@ -1,4 +1,4 @@
-name: nxconf
+name: ncm
 version: 0.0.1
 author: David R. Myers II <davidrmyersii@gmail.com>
 about: A full-featured Nginx configuration management tool (built in Rust).
@@ -53,7 +53,7 @@ subcommands:
                 takes_value: true
             - enabled_dir:
                 long: enabled-dir
-                help: Path to where nxconf should store the link to the specified file
+                help: Path to where ncm should store the link to the specified file
                 value_name: PATH
                 default_value: /etc/nginx/sites-enabled
                 takes_value: true
