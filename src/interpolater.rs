@@ -1,4 +1,4 @@
-pub fn interpolate(string: &str, args: &[(&str, &str)]) -> String {
+pub fn interpolate(string: String, args: &[(&str, &str)]) -> String {
     let mut text = String::from(string);
 
     for arg in args {
