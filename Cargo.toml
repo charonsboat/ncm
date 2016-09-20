@@ -5,3 +5,4 @@ authors = ["David R. Myers II <davidrmyersii@gmail.com>"]
 
 [dependencies]
 clap = { version = "2.12.*", features = [ "yaml" ] }
+hyper = "0.9.*"
