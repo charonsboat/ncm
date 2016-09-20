@@ -1,7 +1,12 @@
 #[macro_use] // implement macros from clap to allow loading from YAML
 extern crate clap;
+extern crate hyper;
+
+mod interpolater;
 
 use clap::App;
+use hyper::client::Client;
+use hyper::Url;
 use std::io::prelude::*;
 use std::fs::{File, remove_file};
 use std::path::{Path, PathBuf};
@@ -19,8 +24,18 @@ fn main() {
             let hostname = subc.value_of("hostname").unwrap();
             let conf_dir = subc.value_of("conf_dir").unwrap();
 
-            let file_path     = Path::new(conf_dir).join(filename);
-            let file_contents = generate_conf(document_root, hostname);
+            let file_path = Path::new(conf_dir).join(filename);
+
+            let file_contents = match subc.is_present("template") {
+                true => {
+                    let template = subc.value_of("template").unwrap();
+
+                    generate_conf_from_template(document_root, hostname, template)
+                },
+                false => {
+                    generate_conf(document_root, hostname)
+                }
+            };
 
             generate_file(&file_path, &file_contents);
         },
@@ -93,7 +108,54 @@ fn remove_link(file_path: &PathBuf) {
     }
 }
 
-fn generate_conf(document_root: &str, hostname: &str, ) -> String {
+fn generate_conf_from_template(document_root: &str, hostname: &str, template_url: &str) -> String {
+
+    let mut conf = String::new();
+
+    match Url::parse(template_url) {
+        Ok(url) => {
+            // is a Url
+            let client = Client::new();
+
+            let mut response = client.get(url).send().unwrap();
+
+            match response.read_to_string(&mut conf) {
+                Ok(_) => {
+                    // success
+                    println!("Success! We read the template via a URL!");
+                },
+                Err(error) => {
+                    // failure
+                    println!("Error (conf from template): {}", error);
+                }
+            }
+        },
+        Err(error) => {
+            match File::open(template_url) {
+                Ok(mut file) => {
+                    match file.read_to_string(&mut conf) {
+                        Ok(_) => {
+                            // success
+                            println!("Success! We read the template from the filesystem!");
+                        },
+                        Err(error) => {
+                            // error
+                        }
+                    }
+                },
+                Err(error) => {
+                    // error
+                }
+            }
+        }
+    }
+
+    conf = interpolater::interpolate(conf, &[ ("{document_root}", document_root), ("{hostname}", hostname) ]);
+
+    return conf;
+}
+
+fn generate_conf(document_root: &str, hostname: &str) -> String {
     let conf = format!("\
 server {{
     listen 80;
