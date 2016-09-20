@@ -87,7 +87,7 @@ Vagrant.configure(2) do |config|
         ####
 
         # @param: (optional) list of system packages to install separated by spaces. E.g. "git curl screen"
-        args_base_packages = "git"
+        args_base_packages = "git libssl-dev"
 
         # @param: (optional) locale to set for LC_ALL global
         args_base_locale = "en_US.UTF-8"
