@@ -19,6 +19,7 @@ subcommands:
                 value_name: ROOT
                 takes_value: true
                 required: true
+                display_order: 1
             - hostname:
                 long: hostname
                 help: Sets the ServerName (hostname) for the Server block
